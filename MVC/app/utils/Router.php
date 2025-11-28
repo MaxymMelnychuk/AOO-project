@@ -21,7 +21,7 @@ class Router
   if (isset($url[1])) {
    $methodName = $url[1];
   } else {
-   $methodName = 'index';
+   $methodName = 'findAll';
   }
 
   // Extrait la suite de l'URL
