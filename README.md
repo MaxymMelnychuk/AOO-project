@@ -1,4 +1,3 @@
 # AOO-project
 
-Julien Clavier
-Maxym Melnychuk
+Julien Clavier | Maxym Melnychuk
