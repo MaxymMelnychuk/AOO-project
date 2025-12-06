@@ -10,8 +10,7 @@ class Router
 
   // Le premier élément de l'URL est le contrôleur
   if (empty($url[0])) {
-   // Redirection vers la 404
-   die('<p>404</p>');
+   $url[0] = 'activity';
   }
 
   // Défini le nom du controller
@@ -21,7 +20,7 @@ class Router
   if (isset($url[1])) {
    $methodName = $url[1];
   } else {
-   $methodName = 'findAll';
+   $methodName = 'index';
   }
 
   // Extrait la suite de l'URL

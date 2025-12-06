@@ -12,9 +12,10 @@
  <header>
   <h1>Mon site MVC</h1>
   <nav>
-   <a href="/user/findAll">Liste des utilisateurs</a>
-   <a href="/user/one/1">1er utilisateur</a>
+   <a href="/user">Liste des utilisateurs</a>
+    <a href="/">Liste des activitées</a>
    <a href="/user/register">S'inscrire</a>
+   <a href="/user/login">Connexion</a>
   </nav>
  </header>
 
@@ -22,15 +23,7 @@
   <?= $content ?? '<p>Aucun contenu à afficher</p>' ?>
  </main>
 
- <footer>
-    <h1>Login</h1>
-    <form action="POST">
-    <input type="text" placeholder="Username" name="username">
-    <input type="password" placeholder="Password" name="password">
-    <button type="submit">Sumbit yeahh</button>
-    </form>
  
- </footer>
 </body>
 
 </html>

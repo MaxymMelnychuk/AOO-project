@@ -1,7 +1,7 @@
 <?php
 trait Render
 {
- public function renderView(string $view, array $data = [], string $layout = 'layout')
+ public function renderView(string $view, array $data = [], string $layout = 'index')
  {
   // Extraction des données en tant que variables
   // Va créer une variable par élément du tableau

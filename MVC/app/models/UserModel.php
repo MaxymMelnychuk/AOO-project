@@ -7,37 +7,30 @@ class UserModel extends Bdd
   parent::__construct();
  }
 
- public function findAll(): array
- {
-  $users = $this->co->prepare('SELECT * FROM Users');
-  $users->execute();
-
-  return $users->fetchAll(PDO::FETCH_CLASS, 'User');
- }
-
- public function findOneById(int $id): User | false
- {
-  $users = $this->co->prepare('SELECT * FROM Users WHERE id = :id LIMIT 1');
-  $users->setFetchMode(PDO::FETCH_CLASS, 'User');
-  $users->execute([
-   'id' => $id
-  ]);
-
-  return $users->fetch();
- }
- public function add(User $user): void
-    {
-        $stmt = $this->co->prepare(
-            'INSERT INTO Users (prenom, nom, email, role,  motdepasse)
-             VALUES (:prenom, :nom, :email, :role, :motdepasse)'
-        );
-
-        $stmt->execute([
-            'prenom' => $user->getPrenom(),
-            'nom' => $user->getNom(),
-            'email' => $user->getEmail(),
-            'role' => $user->getRole(),
-            'motdepasse' => $user->getPwd(),
-        ]);
+ public function logUser(string $email, string $motdepasse): array {
+    $stmt = $this->co->prepare('SELECT * FROM users WHERE email = :email');
+    $stmt->execute(['email' => $email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($user && password_verify($motdepasse, $user['motdepasse'])) {
+        return $user;
     }
+    return [];
+}
+
+public function createUser(array $data): bool {
+    $stmt = $this->co->prepare('INSERT INTO users (prenom, nom, email, motdepasse, role) VALUES (:prenom,:nom,:email,:motdepasse,:role)');
+    return $stmt->execute([
+        'prenom' => $data['prenom'],
+        'nom' => $data['nom'],
+        'email' => $data['email'],
+        'motdepasse' => password_hash($data['motdepasse'], PASSWORD_DEFAULT),
+        'role' => $data['role'] ?? 'user'
+    ]);
+}
+
+public function getAllUsers(): array {
+    $stmt = $this->co->prepare('SELECT * FROM users');
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
